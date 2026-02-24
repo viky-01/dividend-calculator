@@ -24,8 +24,25 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const simulation = simulateDividendGrowth(form)
-    setResults(simulation)
+    const withReinvest = simulateDividendGrowth({
+      ...form,
+      reinvest: true,
+    })
+
+    const withoutReinvest = simulateDividendGrowth({
+      ...form,
+      reinvest: false,
+    })
+
+    const merged = withReinvest.map((item, index) => ({
+      year: item.year,
+      withReinvest: item.portfolioValue,
+      withoutReinvest: withoutReinvest[index].portfolioValue,
+      shares: item.shares,
+      totalDividends: item.totalDividends,
+    }))
+
+    setResults(merged)
   }
 
   let finalValue = 0
@@ -36,7 +53,7 @@ function App() {
 
   if (results.length > 0) {
     const last = results[results.length - 1]
-    finalValue = last.portfolioValue
+    finalValue = last.withReinvest
     totalDividends = last.totalDividends
     finalShares = last.shares
 
@@ -110,7 +127,7 @@ function App() {
               <div className="bg-slate-50 p-4 rounded-xl shadow-inner">
                 <h3 className="text-sm text-gray-500">Final Portfolio</h3>
                 <p className="text-xl font-bold text-green-600">
-                  ₹ {results[results.length - 1].portfolioValue.toFixed(2)}
+                  ₹ {results[results.length - 1].withReinvest.toFixed(2)}
                 </p>
               </div>
 
