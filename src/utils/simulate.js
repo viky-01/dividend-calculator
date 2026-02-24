@@ -9,9 +9,11 @@ export function simulateDividendGrowth({
   let results = []
   let currentShares = shares
   let currentDividend = dividendPerShare
+  let totalDividends = 0
 
   for (let year = 1; year <= years; year++) {
     const yearlyDividend = currentShares * currentDividend
+    totalDividends += yearlyDividend
 
     if (reinvest) {
       const newShares = yearlyDividend / sharePrice
@@ -25,6 +27,7 @@ export function simulateDividendGrowth({
       shares: currentShares,
       dividend: yearlyDividend,
       portfolioValue,
+      totalDividends,
     })
 
     currentDividend = currentDividend * (1 + growthRate / 100)

@@ -88,11 +88,38 @@ function App() {
         {/* RESULTS */}
         {results.length > 0 && (
           <div className="mt-10">
-            <div className="bg-slate-50 p-6 rounded-xl shadow-inner mb-8">
-              <h2 className="text-xl font-semibold mb-2">Final Portfolio Value</h2>
-              <p className="text-2xl font-bold text-green-600">
-                ₹ {results[results.length - 1].portfolioValue.toFixed(2)}
-              </p>
+
+            {/* Analytics Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+
+              <div className="bg-slate-50 p-4 rounded-xl shadow-inner">
+                <h3 className="text-sm text-gray-500">Final Portfolio</h3>
+                <p className="text-xl font-bold text-green-600">
+                  ₹ {results[results.length - 1].portfolioValue.toFixed(2)}
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-4 rounded-xl shadow-inner">
+                <h3 className="text-sm text-gray-500">Total Dividends</h3>
+                <p className="text-xl font-bold text-blue-600">
+                  ₹ {results[results.length - 1].totalDividends.toFixed(2)}
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-4 rounded-xl shadow-inner">
+                <h3 className="text-sm text-gray-500">Final Shares</h3>
+                <p className="text-xl font-bold">
+                  {results[results.length - 1].shares.toFixed(2)}
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-4 rounded-xl shadow-inner">
+                <h3 className="text-sm text-gray-500">Initial Investment</h3>
+                <p className="text-xl font-bold">
+                  ₹ {(form.sharePrice * form.shares).toFixed(2)}
+                </p>
+              </div>
+
             </div>
 
             <ProjectionChart data={results} />
