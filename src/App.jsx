@@ -28,6 +28,21 @@ function App() {
     setResults(simulation)
   }
 
+  let finalValue = 0
+  let totalDividends = 0
+  let finalShares = 0
+  let initialInvestment = form.sharePrice * form.shares
+  let cagr = 0
+
+  if (results.length > 0) {
+    const last = results[results.length - 1]
+    finalValue = last.portfolioValue
+    totalDividends = last.totalDividends
+    finalShares = last.shares
+
+    cagr = Math.pow(finalValue / initialInvestment, 1 / form.years) - 1
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 flex justify-center p-10">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-4xl">
@@ -90,7 +105,7 @@ function App() {
           <div className="mt-10">
 
             {/* Analytics Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
 
               <div className="bg-slate-50 p-4 rounded-xl shadow-inner">
                 <h3 className="text-sm text-gray-500">Final Portfolio</h3>
@@ -117,6 +132,13 @@ function App() {
                 <h3 className="text-sm text-gray-500">Initial Investment</h3>
                 <p className="text-xl font-bold">
                   ₹ {(form.sharePrice * form.shares).toFixed(2)}
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-4 rounded-xl shadow-inner">
+                <h3 className="text-sm text-gray-500">CAGR</h3>
+                <p className="text-xl font-bold text-purple-600">
+                  {(cagr * 100).toFixed(2)}%
                 </p>
               </div>
 
