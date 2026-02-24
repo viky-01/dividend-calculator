@@ -25,6 +25,17 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if (
+      form.sharePrice <= 0 ||
+      form.dividendPerShare < 0 ||
+      form.shares <= 0 ||
+      form.years <= 0
+    ) {
+      alert("Please enter valid positive values.")
+      return
+    }
+
     const withReinvest = simulateDividendGrowth({
       ...form,
       reinvest: true,
@@ -60,7 +71,7 @@ function App() {
     totalDividends = last.totalDividends
     finalShares = last.shares
 
-    cagr = Math.pow(finalValue / initialInvestment, 1 / form.years) - 1
+    cagr = finalValue > 0 ? Math.pow(finalValue / initialInvestment, 1 / form.years) - 1 : 0
   }
 
   return (
