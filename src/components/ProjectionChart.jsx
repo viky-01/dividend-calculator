@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts"
 
-function ProjectionChart({ data }) {
+function ProjectionChart({ data, viewMode}) {
   return (
     <div style={{ width: "100%", height: 400 }}>
       <ResponsiveContainer>
@@ -20,19 +20,25 @@ function ProjectionChart({ data }) {
             
             <Line
                 type="monotone"
-                dataKey="withReinvest"
+                dataKey={
+                    viewMode === "portfolio" ? "withReinvest" : "withDividend"
+                }
                 stroke="#2563eb"
                 strokeWidth={3}
                 name="With Reinvestment"
-            />
+                />
 
-            <Line
+                <Line
                 type="monotone"
-                dataKey="withoutReinvest"
+                dataKey={
+                    viewMode === "portfolio"
+                    ? "withoutReinvest"
+                    : "withoutDividend"
+                }
                 stroke="#dc2626"
                 strokeWidth={3}
                 name="Without Reinvestment"
-            />
+                />
             </LineChart>
       </ResponsiveContainer>
     </div>

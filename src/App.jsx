@@ -3,6 +3,7 @@ import { useState } from "react"
 import { simulateDividendGrowth } from "./utils/simulate"
 
 function App() {
+  const [viewMode, setViewMode] = useState("portfolio")
   const [form, setForm] = useState({
     sharePrice: 100,
     dividendPerShare: 5,
@@ -38,6 +39,8 @@ function App() {
       year: item.year,
       withReinvest: item.portfolioValue,
       withoutReinvest: withoutReinvest[index].portfolioValue,
+      withDividend: item.dividend,
+      withoutDividend: withoutReinvest[index].dividend,
       shares: item.shares,
       totalDividends: item.totalDividends,
     }))
@@ -161,7 +164,31 @@ function App() {
 
             </div>
 
-            <ProjectionChart data={results} />
+            <div className="flex gap-4 mb-6">
+              <button
+                onClick={() => setViewMode("portfolio")}
+                className={`px-4 py-2 rounded-lg ${
+                  viewMode === "portfolio"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                Portfolio Growth
+              </button>
+
+              <button
+                onClick={() => setViewMode("dividend")}
+                className={`px-4 py-2 rounded-lg ${
+                  viewMode === "dividend"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                Annual Dividends
+              </button>
+            </div>
+
+            <ProjectionChart data={results} viewMode={viewMode} />
           </div>
         )}
       </div>
